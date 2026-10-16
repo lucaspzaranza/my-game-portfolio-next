@@ -32,7 +32,7 @@ const copy = {
     aboutEyebrow: "PLAYER PROFILE", aboutTitle: "Oi, eu sou Lucas.", aboutText: "Minha paixão começou com Super Mario e Mega Man X. Aos 14 anos, descobri que podia criar meus próprios jogos no RPG Maker 2003. Em 2013, comecei a aprender Unity e C# — e desde então sigo construindo mundos, mecânicas e ferramentas para jogadores.",
     skills: ["Unity & C#", "Gameplay 2D", "Mirror Multiplayer", "WebGL & Android", "Pixel art", "Roblox / Lua"],
     career: "TRILHA DE CARREIRA", careerTitle: "Experiência em jogo", projectsEyebrow: "SAVE SELECT", projectsTitle: "Projetos selecionados", projectHint: "Escolha um cartucho para ver os detalhes.", all: "TODOS", game: "DESTAQUES", webgl: "JOGÁVEIS", more: "ABRIR DETALHES", details: "DETALHES DO PROJETO", year: "ANO", repo: "CÓDIGO-FONTE", demo: "JOGAR DEMO", video: "VER GAMEPLAY", close: "FECHAR",
-    contactEyebrow: "PLAYER 1 READY", contactTitle: "Vamos criar algo legal?", contactText: "Estou aberto a conversas sobre jogos, ferramentas e experiências interativas.", email: "MANDAR E-MAIL", linkedin: "LINKEDIN", github: "GITHUB", whatsapp: "WHATSAPP", footer: "Feito com carinho e alguns continues.", themeLabel: "TEMA", jrpg: "JRPG", turbo: "TURBO 3000",
+    contactEyebrow: "PLAYER 1 READY", contactTitle: "Vamos criar algo legal?", contactText: "Estou aberto a conversas sobre jogos, ferramentas e experiências interativas.", email: "E-MAIL", linkedin: "LINKEDIN", github: "GITHUB", whatsapp: "WHATSAPP", footer: "Feito com carinho e alguns continues.", themeLabel: "TEMA", jrpg: "JRPG", turbo: "TURBO 3000",
     experience: [
       { dates: "2025 — 2026", role: "Fullstack Developer", company: "Botbot", detail: "Interfaces com React, Next.js e Tailwind; integração de robôs e recursos conectados a hardware com ROS." },
       { dates: "2022 — 2024", role: "Unity Developer · Freelance", company: "Jogos para web e eventos", detail: "Oito jogos educativos WebGL, além de experiências para campanhas e eventos, com suporte a mobile e desktop." },
@@ -153,6 +153,9 @@ export default function Portfolio() {
   return (
     <main className="portfolio-shell" data-theme={theme}>
       <div className="scanlines" aria-hidden="true" />
+      <div className="twinkle-stars" aria-hidden="true">
+        <span /><span /><span /><span /><span />
+      </div>
       <header className="topbar mx-auto flex w-full items-center justify-between">
         <button className="brand" onClick={() => setView("menu")} aria-label="Lucas Zaranza — main menu"><span className="brand-mark">LZ</span><span>LUCAS ZARANZA<span className="brand-sub">GAME DEVELOPER</span></span></button>
         {view !== "menu" && <nav className="desktop-nav" aria-label="Portfolio screens">{menuItems.map((item) => <button key={item.screen} className={view === item.screen ? "active" : ""} aria-current={view === item.screen ? "page" : undefined} onClick={() => setView(item.screen)}>{item.label}</button>)}</nav>}
@@ -178,7 +181,7 @@ export default function Portfolio() {
       {view === "about" && <div className="game-screen section-wrap"><button className="return-menu" onClick={() => setView("menu")}>← {t.backToMenu}</button><section id="about" className="about-section">
         <div className="section-heading"><p className="eyebrow">{t.aboutEyebrow}</p><h2>{t.aboutTitle}</h2></div>
         <div className="about-card panel-pixel">
-          <div className="portrait-frame"><Image src="/portfolio/me.png" alt="Lucas Zaranza" width={960} height={1280} priority className="portrait"/><span className="portrait-tag">LV. 10+</span></div>
+          <div className="portrait-frame"><Image src="/portfolio/me.png" unoptimized alt="Lucas Zaranza" width={960} height={1280} priority className="portrait"/><span className="portrait-tag">LV. 10+</span></div>
           <div className="about-copy"><p>{t.aboutText}</p><p className="about-long">{about.paragraphs[2]}</p><div className="skill-list">{t.skills.map((skill) => <span key={skill} className="skill-chip">{skill}</span>)}</div><div className="skills-ribbon">{careerSkills.map((skill) => <span key={skill}>{skill}</span>)}</div></div>
         </div>
       </section></div>}
