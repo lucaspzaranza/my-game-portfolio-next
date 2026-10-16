@@ -148,3 +148,8 @@
 .project-modal .close-text{display:inline-flex;align-items:center;justify-content:center;flex:0 0 auto;min-height:42px;margin:8px auto 0;padding:0 18px;border:2px solid #ffe86b;background:#ffe86b;color:#170b03;font:8px var(--pixel-font);cursor:pointer}.project-modal .close-text:hover,.project-modal .close-text:focus-visible{background:#fff3a3;border-color:#fff3a3;outline:2px solid #fff;outline-offset:2px}
 @media(max-width:640px){.project-modal{height:auto;min-height:0;max-height:min(88vh,760px);padding:18px}.project-modal .modal-image{height:clamp(100px,24vh,190px);min-height:100px}.project-modal .modal-actions{gap:8px}.project-modal .close-text{margin-top:6px}}
 
+
+/* Prevent the theme select option from clipping. */
+.topbar .theme-picker select{width:136px;max-width:136px}
+@media(max-width:640px){.topbar .theme-picker select{width:112px;max-width:112px}}
+
