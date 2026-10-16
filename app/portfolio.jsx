@@ -6,15 +6,15 @@ import portfolioData from "../src/data/data.json";
 
 const { aboutMe, myProjectsData } = portfolioData;
 
-const cartridgeImages = [
-  "super-bomberman-4-cartridge.png", "roleta-cartridge.png", "flappy-bird-cartridge.png",
-  "catch-game-cartridge.png", "slot-machine-cartridge.png", "match-game-cartridge.png",
-  "virtual-keyboard-cartridge.png", "penosas-strike-cartridge.png", "math-factory-cartridge.png",
-  "doom-of-the-penosas-cartridge.png", "snake-cartridge.png", "diep.io-cartridge.png",
-  "super-bomberman-4-cartridge.png", "rg-cartridge.png", "emotionmeter-cartridge.png",
-  "insta-cartridge.png", "mesh-cartridge.png", "cursive-cartridge.png", "puzzle-cartridge.png",
-  "fantasy-cartridge.png", "supermarket-cartridge.png", "runner-cartridge.png", "limpa-copo.png",
-  "love-quizz.png",
+const noCartridgeImages = [
+  "super-bomberman.png", "roleta.png", "flappy-bird.png",
+  "catch-game.png", "slot-machine.png", "jogo-da-memoria.png",
+  "virtual-keyboard.png", "penosas-portfolio.png", "math-factory.png",
+  "doom-of-the-penosas.png", "snake.png", "diep.io.png",
+  "super-bomberman.png", "rg.png", "emo-bears.png",
+  "zaza-kahlo.png", "mesh-game.png", "letra-a.png", "cat-puzzle.png",
+  "fantasy-or-reality.png", "supermarket-game.png", "robo-runner.png",
+  "limpa-copo.png", "love-quiz.png",
 ];
 
 const copy = {
@@ -84,7 +84,7 @@ export default function Portfolio() {
   const [selected, setSelected] = useState(null);
   const t = copy[lang];
   const projects = myProjectsData.data;
-  const shownProjects = useMemo(() => filter === "all" ? projects : filter === "webgl" ? projects.filter((project) => project.links.demo) : projects.filter((project) => [8, 10, 13, 22, 23, 24].includes(project.id)), [filter, projects]);
+  const shownProjects = useMemo(() => filter === "all" ? projects : filter === "webgl" ? projects.filter((project) => project.links.demo) : projects.filter((project) => [3, 8, 10, 13, 22, 23, 24].includes(project.id)), [filter, projects]);
   const about = aboutMe[lang];
   const menuItems = useMemo(() => menuViews.map((screen, index) => ({ screen, label: t.nav[index + 1] })), [t.nav]);
 
@@ -166,7 +166,7 @@ export default function Portfolio() {
         </div>
       </header>
 
-      <audio ref={audioRef} src="/Top%20Gear%203000%20%28SNES%29%20Music%20-%20Title.mp3" loop preload="none" />
+      <audio ref={audioRef} src="/Top%20Gear%203000%20%28<SNES>%29%20Music%20-%20Title.mp3" loop preload="none" />
 
       {view === "menu" && <section id="home" className="hero-section title-screen section-wrap">
         <div className="hero-copy">
@@ -174,7 +174,19 @@ export default function Portfolio() {
           <p className="eyebrow">{t.eyebrow}</p>
           <h1>{t.headline}</h1>
           <div className="hero-stats"><div><strong>{t.xp}</strong><span>{t.xpLabel}</span></div><div><strong>{t.shipped}</strong><span>{t.shippedLabel}</span></div><div><strong>BR</strong><span>FORTALEZA · REMOTE</span></div></div>
-          <div className="main-menu panel-pixel"><p className="menu-heading">{t.menuPrompt}</p><div className="menu-options" role="menu">{menuItems.map((item, index) => <button key={item.screen} role="menuitem" className={menuIndex === index ? "menu-option selected" : "menu-option"} onMouseEnter={() => setMenuIndex(index)} onFocus={() => setMenuIndex(index)} onClick={() => setView(item.screen)}><span className="menu-arrow" aria-hidden="true">{menuIndex === index ? "▶▶" : ""}</span><span>{item.label}</span><span className="menu-enter" aria-hidden="true">↵</span></button>)}</div><p className="menu-hint">{t.menuHint}</p></div>
+          <div className="main-menu panel-pixel">
+            <p className="menu-heading">{t.menuPrompt}</p>
+            <div className="menu-options" role="menu">
+              {menuItems.map((item, index) => <button key={item.screen} role="menuitem" className={menuIndex === index ? "menu-option selected" : "menu-option"} onMouseEnter={() => setMenuIndex(index)} onFocus={() => setMenuIndex(index)} onClick={() => setView(item.screen)}>
+              <span className="menu-arrow" aria-hidden="true">
+                <Image src="fast-forward.png" className={`${menuIndex === index? 'block' : 'hidden'}`} width={16} height={16} unoptimized aria-label="forward" alt="forward"/>
+              </span>
+              <span>{item.label}</span>
+              <Image src="alien.png" width={16} height={16} unoptimized aria-label="alien" alt="alien"/>
+              </button>)}
+            </div>
+            <p className="menu-hint">{t.menuHint}</p>
+          </div>
         </div>
       </section>}
 
@@ -192,8 +204,8 @@ export default function Portfolio() {
           const originalIndex = projects.findIndex((item) => item.id === project.id);
           return <button className="project-card" key={project.id} onClick={() => setSelected(project)} aria-label={`${t.more}: ${project.texts.name[lang]}`}>
             <span className="project-card-top"><span>GAME {String(project.id).padStart(2, "0")}</span><span>{project.year}</span></span>
-            <span className="cartridge-window"><Image src={`/portfolio/cartridges/${cartridgeImages[originalIndex]}`} alt="" fill sizes="(max-width: 640px) 90vw, (max-width: 1000px) 42vw, 28vw" className="cartridge-image"/></span>
-            <span className="project-card-bottom"><span className="project-name">{project.texts.name[lang]}</span><span className="project-arrow">↗</span></span>
+            <span className="cartridge-window"><Image unoptimized src={`/portfolio/no-cartridge/${noCartridgeImages[originalIndex]}`} alt="" fill className="cartridge-image"/></span>
+            <span className="project-card-bottom"><span className="project-name">{project.texts.name[lang]}</span><Image src="/joystick.png" width={32} height={32} unoptimized alt="joystick"/></span>
           </button>;
         })}</div>
       </section></div>}
@@ -203,11 +215,34 @@ export default function Portfolio() {
         <div className="timeline">{t.experience.map((item) => <article className="timeline-entry" key={item.dates + item.company}><div className="timeline-date">{item.dates}</div><div className="timeline-content panel-pixel"><h3>{item.role}</h3><p className="timeline-company">{item.company}</p><p>{item.detail}</p></div></article>)}</div>
       </section></div>}
 
-      {view === "contact" && <div className="game-screen section-wrap"><button className="return-menu" onClick={() => setView("menu")}>← {t.backToMenu}</button><section id="contact" className="contact-section"><div className="contact-panel panel-pixel"><div><p className="eyebrow">{t.contactEyebrow}</p><h2>{t.contactTitle}</h2><p>{t.contactText}</p></div><div className="contact-links"><PixelButton href="mailto:lucaszaranza@gmail.com">{t.email}</PixelButton><a href="https://www.linkedin.com/in/lucas-zaranza-74157a60/" target="_blank" rel="noreferrer">{t.linkedin} ↗</a><a href="https://github.com/lucaspzaranza" target="_blank" rel="noreferrer">{t.github} ↗</a><a href="https://wa.me/5585991753445" target="_blank" rel="noreferrer">{t.whatsapp} ↗</a></div></div></section></div>}
+      {view === "contact" && <div className="game-screen section-wrap"><button className="return-menu" onClick={() => setView("menu")}>← {t.backToMenu}</button><section id="contact" className="contact-section"><div className="contact-panel panel-pixel"><div><p className="eyebrow">{t.contactEyebrow}</p><h2>{t.contactTitle}</h2><p>{t.contactText}</p></div><div className="contact-links"><a href="mailto:lucaszaranza@gmail.com">{t.email}</a><a href="https://www.linkedin.com/in/lucaszaranza" target="_blank" rel="noreferrer">{t.linkedin}</a><a href="https://github.com/lucaspzaranza" target="_blank" rel="noreferrer">{t.github}</a><a href="https://wa.me/5585991753445" target="_blank" rel="noreferrer">{t.whatsapp}</a></div></div></section></div>}
 
       <footer className="site-footer"><span>© {new Date().getFullYear()} LUCAS ZARANZA</span><span>{t.footer}</span><button onClick={() => setView("menu")}>{t.nav[0]} ↑</button></footer>
 
-      {selected && <div className="modal-backdrop" role="presentation" onMouseDown={(event) => { if (event.target === event.currentTarget) setSelected(null); }}><section className="project-modal panel-pixel" role="dialog" aria-modal="true" aria-labelledby="modal-title"><button className="modal-close" onClick={() => setSelected(null)} aria-label={t.close}>×</button><p className="eyebrow">{t.details} · {t.year} {selected.year}</p><h2 id="modal-title">{selected.texts.name[lang]}</h2><div className="modal-image"><Image src={`/portfolio/cartridges/${cartridgeImages[projects.findIndex((item) => item.id === selected.id)]}`} alt="" fill sizes="(max-width: 700px) 90vw, 640px" className="cartridge-image"/></div><div className="modal-description">{selected.texts.description[lang].map((paragraph, index) => <p key={index}>{paragraph}</p>)}</div><div className="modal-actions">{selected.links.demo && <PixelButton href={selected.links.demo} target="_blank" rel="noreferrer">{t.demo} ↗</PixelButton>}{selected.links.youtube && <PixelButton href={selected.links.youtube} target="_blank" rel="noreferrer" secondary>{t.video} ↗</PixelButton>}{selected.links.repo && <PixelButton href={selected.links.repo} target="_blank" rel="noreferrer" secondary>{t.repo} ↗</PixelButton>}</div><button className="close-text" onClick={() => setSelected(null)}>{t.close} ×</button></section></div>}
+      {selected && 
+        <div className="modal-backdrop" role="presentation" onMouseDown={(event) => { if (event.target === event.currentTarget) setSelected(null); }}>
+          <section className="project-modal panel-pixel" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+            <button className="modal-close" onClick={() => setSelected(null)} aria-label={t.close}>×</button>
+            <p className="eyebrow">{t.details} · {t.year} {selected.year}</p>
+            <h2 id="modal-title">{selected.texts.name[lang]}</h2>
+            <div className="modal-image"><Image src={`/portfolio/no-cartridge/${noCartridgeImages[projects.findIndex((item) => item.id === selected.id)]}`} alt="" fill sizes="(max-width: 700px) 90vw, 640px" className="cartridge-image"/></div>
+            <div className="modal-description">
+              {selected.texts.description[lang].map((paragraph, index) => <p key={index}>{paragraph}</p>)}
+            </div>
+            <div className="modal-actions">
+              {selected.links.demo && 
+                <PixelButton href={selected.links.demo} target="_blank" rel="noreferrer">
+                  <Image src="/atari-joystick.png" width={32} height={32} unoptimized alt=""/>{t.demo}</PixelButton>}
+                {selected.links.youtube && 
+                <PixelButton href={selected.links.youtube} target="_blank" rel="noreferrer">
+                  <Image src="/youtube.png" width={24} height={24} unoptimized alt=""/>{t.video}</PixelButton>}
+                {selected.links.repo && 
+                <PixelButton href={selected.links.repo} target="_blank" rel="noreferrer">
+                  <Image src="/github.png" width={24} height={24} unoptimized alt=""/>{t.repo}</PixelButton>}
+            </div>
+            {/* <button className="close-text" onClick={() => setSelected(null)}>{t.close} X</button> */}
+          </section>
+        </div>}
     </main>
   );
 }
