@@ -67,6 +67,25 @@ const copy = {
 const careerSkills = ["Unity3D", "C#", "Mirror", "WebGL", "Android", "Roblox · Lua", "Next.js", "Tailwind CSS"];
 const menuViews = ["about", "projects", "experience", "contact"];
 
+// Per-theme assets. Layout stays identical; only music and icons change.
+const themeAssets = {
+  turbo: {
+    music: "/Top%20Gear%203000%20%28%3CSNES%3E%29%20Music%20-%20Title.mp3",
+    menuCursor: "/fast-forward.png",
+    menuIcon: "/alien.png",
+    projectIcon: "/joystick.png",
+    demoIcon: "/atari-joystick.png",
+  },
+  jrpg: {
+    // Drop your own track at public/portfolio/jrpg/ (e.g. Theme of Love, Main Theme).
+    music: "/portfolio/jrpg/theme.mp3",
+    menuCursor: "/portfolio/jrpg/arrow.png",
+    menuIcon: "/portfolio/jrpg/crystal.png",
+    projectIcon: "/portfolio/jrpg/treasure-chest.png",
+    demoIcon: "/portfolio/jrpg/sword.png",
+  },
+};
+
 function PixelButton({ children, href, onClick, secondary = false, ...props }) {
   const className = `pixel-button ${secondary ? "pixel-button-secondary" : ""}`;
   return href ? <a className={className} href={href} {...props}>{children}</a> : <button className={className} onClick={onClick} {...props}>{children}</button>;
@@ -83,6 +102,7 @@ export default function Portfolio() {
   const [filter, setFilter] = useState("all");
   const [selected, setSelected] = useState(null);
   const t = copy[lang];
+  const assets = themeAssets[theme];
   const projects = myProjectsData.data;
   const shownProjects = useMemo(() => filter === "all" ? projects : filter === "webgl" ? projects.filter((project) => project.links.demo) : projects.filter((project) => [3, 8, 10, 13, 22, 23, 24].includes(project.id)), [filter, projects]);
   const about = aboutMe[lang];
@@ -112,6 +132,16 @@ export default function Portfolio() {
   useEffect(() => {
     if (audioRef.current) audioRef.current.volume = musicVolume;
   }, [musicVolume]);
+
+  useEffect(() => {
+    const audio = audioRef.current;
+    if (!audio) return;
+    const wasPlaying = !audio.paused;
+    audio.src = themeAssets[theme].music;
+    if (wasPlaying) {
+      audio.play().catch(() => setMusicPlaying(false));
+    }
+  }, [theme]);
 
   useEffect(() => {
     const handleKeyboard = (event) => {
@@ -166,7 +196,7 @@ export default function Portfolio() {
         </div>
       </header>
 
-      <audio ref={audioRef} src="/Top%20Gear%203000%20%28<SNES>%29%20Music%20-%20Title.mp3" loop preload="none" />
+      <audio ref={audioRef} loop preload="none" />
 
       {view === "menu" && <section id="home" className="hero-section title-screen section-wrap">
         <div className="hero-copy">
@@ -179,10 +209,10 @@ export default function Portfolio() {
             <div className="menu-options" role="menu">
               {menuItems.map((item, index) => <button key={item.screen} role="menuitem" className={menuIndex === index ? "menu-option selected" : "menu-option"} onMouseEnter={() => setMenuIndex(index)} onFocus={() => setMenuIndex(index)} onClick={() => setView(item.screen)}>
               <span className="menu-arrow" aria-hidden="true">
-                <Image src="fast-forward.png" className={`${menuIndex === index? 'block' : 'hidden'}`} width={16} height={16} unoptimized aria-label="forward" alt="forward"/>
+                <Image src={assets.menuCursor} className={`${menuIndex === index? 'block' : 'hidden'}`} width={16} height={16} unoptimized alt=""/>
               </span>
               <span>{item.label}</span>
-              <Image src="alien.png" width={16} height={16} unoptimized aria-label="alien" alt="alien"/>
+              <Image src={assets.menuIcon} width={16} height={16} unoptimized alt=""/>
               </button>)}
             </div>
             <p className="menu-hint">{t.menuHint}</p>
@@ -205,7 +235,7 @@ export default function Portfolio() {
           return <button className="project-card" key={project.id} onClick={() => setSelected(project)} aria-label={`${t.more}: ${project.texts.name[lang]}`}>
             <span className="project-card-top"><span>GAME {String(project.id).padStart(2, "0")}</span><span>{project.year}</span></span>
             <span className="cartridge-window"><Image unoptimized src={`/portfolio/no-cartridge/${noCartridgeImages[originalIndex]}`} alt="" fill className="cartridge-image"/></span>
-            <span className="project-card-bottom"><span className="project-name">{project.texts.name[lang]}</span><Image src="/joystick.png" width={32} height={32} unoptimized alt="joystick"/></span>
+            <span className="project-card-bottom"><span className="project-name">{project.texts.name[lang]}</span><Image src={assets.projectIcon} width={32} height={32} unoptimized alt=""/></span>
           </button>;
         })}</div>
       </section></div>}
@@ -232,7 +262,7 @@ export default function Portfolio() {
             <div className="modal-actions">
               {selected.links.demo && 
                 <PixelButton href={selected.links.demo} target="_blank" rel="noreferrer">
-                  <Image src="/atari-joystick.png" width={32} height={32} unoptimized alt=""/>{t.demo}</PixelButton>}
+                  <Image src={assets.demoIcon} width={32} height={32} unoptimized alt=""/>{t.demo}</PixelButton>}
                 {selected.links.youtube && 
                 <PixelButton href={selected.links.youtube} target="_blank" rel="noreferrer">
                   <Image src="/youtube.png" width={24} height={24} unoptimized alt=""/>{t.video}</PixelButton>}

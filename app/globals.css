@@ -153,3 +153,110 @@
 .topbar .theme-picker select{width:136px;max-width:136px}
 @media(max-width:640px){.topbar .theme-picker select{width:112px;max-width:112px}}
 
+
+
+/* ==========================================================================
+   JRPG theme — Final Fantasy IV (Cecil & Rosa)
+   Layout is untouched: only palette, backdrop, window frames, the hero title
+   finish and icons change. Icons and music are set in themeAssets (portfolio.jsx).
+   Keep this block at the end of the file so it overrides the older jrpg rules.
+   ========================================================================== */
+.portfolio-shell[data-theme="jrpg"]{
+  --bg:#050a2e;--surface:#10208a;--surface-2:#1b2fb4;--line:#8c98ea;
+  --text:#ffffff;--muted:#c3caff;--accent:#ffe27a;--accent-2:#7fe0ff;--hot:#ff9ec4;--grid:rgba(140,152,234,.12);
+  --jrpg-window:linear-gradient(180deg,#3a4dd8 0%,#1c2a9c 50%,#0b1264 100%);
+  --jrpg-frame:#f2f4ff;
+  background:#050a2e;
+  text-shadow:1px 1px 0 rgba(0,0,10,.9);
+}
+
+/* Daytime meadow backdrop (pixel art). The last gradient is only a fallback if the
+   image file is missing. The light navy veil keeps the hero text readable. */
+.portfolio-shell[data-theme="jrpg"]:before{
+  content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:
+    linear-gradient(180deg,rgba(8,16,80,.18) 0%,rgba(8,16,80,.07) 60%,rgba(8,16,80,0) 100%),
+    url("/portfolio/jrpg/background.jpg") 19% 100%/cover no-repeat,
+    linear-gradient(180deg,#58bfff 0%,#a5c3ff 55%,#bfd9d6 74%,#9ccc3c 76%,#4f8a35 100%);
+}
+.portfolio-shell[data-theme="jrpg"] .scanlines{opacity:.06}
+
+/* Text that sits directly on the landscape (not inside a window) gets a dark outline. */
+.portfolio-shell[data-theme="jrpg"] .topbar,
+.portfolio-shell[data-theme="jrpg"] .hero-copy>:not(.main-menu):not(.online-pill):not(h1),
+.portfolio-shell[data-theme="jrpg"] .section-heading,
+.portfolio-shell[data-theme="jrpg"] .site-footer{
+  text-shadow:1px 1px 0 #000018,-1px 1px 0 #000018,1px -1px 0 #000018,-1px -1px 0 #000018;
+}
+
+/* Classic blue FF window frame for every panel. */
+.portfolio-shell[data-theme="jrpg"] .panel-pixel,
+.portfolio-shell[data-theme="jrpg"] .project-card,
+.portfolio-shell[data-theme="jrpg"] .online-pill{
+  background:var(--jrpg-window);
+  border:2px solid var(--jrpg-frame);
+  border-radius:8px;
+  box-shadow:inset 0 0 0 2px #0a1050,inset 0 0 0 3px #7f8cf0,0 0 0 2px #000010,5px 6px 0 2px rgba(0,0,10,.55);
+}
+.portfolio-shell[data-theme="jrpg"] .project-card:hover,
+.portfolio-shell[data-theme="jrpg"] .project-card:focus-visible{
+  border-color:var(--accent);
+  box-shadow:inset 0 0 0 2px #0a1050,inset 0 0 0 3px var(--accent),0 0 0 2px #000010,6px 9px 0 2px rgba(0,0,10,.55);
+}
+.portfolio-shell[data-theme="jrpg"] .cartridge-window{border-color:#000010}
+.portfolio-shell[data-theme="jrpg"] .portrait-frame{border:4px solid var(--jrpg-frame);outline:2px solid #000010;background:#0b1264}
+.portfolio-shell[data-theme="jrpg"] .skill-chip{background:rgba(255,255,255,.10);border-color:rgba(255,255,255,.35)}
+.portfolio-shell[data-theme="jrpg"] .project-modal .modal-actions{background:transparent;border-top:2px solid rgba(255,255,255,.28)}
+
+/* Menu selection highlight (the glove cursor itself comes from themeAssets). */
+.portfolio-shell[data-theme="jrpg"] .menu-option:hover,
+.portfolio-shell[data-theme="jrpg"] .menu-option:focus-visible,
+.portfolio-shell[data-theme="jrpg"] .menu-option.selected{
+  background:linear-gradient(90deg,rgba(255,255,255,.22),rgba(255,255,255,.03));
+  border-color:rgba(255,255,255,.55);color:var(--text);
+}
+.portfolio-shell[data-theme="jrpg"] .music-toggle:hover,
+.portfolio-shell[data-theme="jrpg"] .music-toggle:focus-visible,
+.portfolio-shell[data-theme="jrpg"] .music-toggle[aria-pressed="true"]{background:rgba(255,226,122,.14)}
+
+/* Title: white-to-ice fill with a dark navy outline and hard drop shadow. */
+.portfolio-shell[data-theme="jrpg"] .title-screen .hero-copy h1{
+  background:linear-gradient(180deg,#ffffff 0%,#e4ecff 55%,#c4d4ff 100%);
+  -webkit-background-clip:text;background-clip:text;
+  -webkit-text-fill-color:transparent;color:transparent;
+  text-shadow:none;
+  filter:drop-shadow(1px 0 0 #0a1050) drop-shadow(-1px 0 0 #0a1050) drop-shadow(0 1px 0 #0a1050) drop-shadow(0 -1px 0 #0a1050) drop-shadow(3px 4px 0 #000018);
+}
+.portfolio-shell[data-theme="jrpg"] .hero-stats strong{color:var(--accent)}
+
+/* Dark text on light fills must not get the white-window text shadow. */
+.portfolio-shell[data-theme="jrpg"] .pixel-button,
+.portfolio-shell[data-theme="jrpg"] .brand-mark,
+.portfolio-shell[data-theme="jrpg"] .portrait-tag,
+.portfolio-shell[data-theme="jrpg"] .filter-button.active,
+.portfolio-shell[data-theme="jrpg"] .return-menu:hover,
+.portfolio-shell[data-theme="jrpg"] .return-menu:focus-visible{text-shadow:none}
+
+/* Sprite icons stay crisp; the contact-link hover cursor becomes the glove. */
+.portfolio-shell[data-theme="jrpg"] img[src*="/portfolio/jrpg/"]{image-rendering:pixelated}
+.portfolio-shell[data-theme="jrpg"] .contact-links>a:not(.pixel-button)::before{
+  background-image:url("/portfolio/jrpg/arrow-2.png");image-rendering:pixelated;
+}
+
+/* JRPG icon sizes — works with any source resolution */
+.portfolio-shell[data-theme="jrpg"] .menu-arrow img{width:32px;height:32px;object-fit:contain}
+.portfolio-shell[data-theme="jrpg"] .menu-option>img{width:32px;height:32px;object-fit:contain}
+.portfolio-shell[data-theme="jrpg"] .project-card-bottom img{width:44px;height:44px;object-fit:contain}
+.portfolio-shell[data-theme="jrpg"] .modal-actions .pixel-button img:first-child{width:36px;height:36px}
+
+.portfolio-shell[data-theme="jrpg"] .menu-option>img{
+  width:32px !important;height:32px !important;object-fit:contain;justify-self:end;
+}
+.portfolio-shell[data-theme="jrpg"] .title-screen .menu-option{
+  grid-template-columns:66px 1fr 40px !important;
+}
+
+/* Demo button icon: smooth rendering instead of pixelated */
+.portfolio-shell[data-theme="jrpg"] .modal-actions .pixel-button img{
+  image-rendering:auto;
+}
