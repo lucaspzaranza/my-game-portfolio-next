@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { useEffect, useMemo, useRef, useState } from "react";
+import { ui } from "./ui-classes";
 import portfolioData from "../src/data/data.json";
 
 const { aboutMe, myProjectsData } = portfolioData;
@@ -70,7 +71,7 @@ const menuViews = ["about", "projects", "experience", "contact"];
 // Per-theme assets. Layout stays identical; only music and icons change.
 const themeAssets = {
   turbo: {
-    music: "/Top%20Gear%203000%20%28%3CSNES%3E%29%20Music%20-%20Title.mp3",
+    music: "/top-gear-3000-theme.mp3",
     menuCursor: "/fast-forward.png",
     menuIcon: "/alien.png",
     projectIcon: "/joystick.png",
@@ -87,7 +88,7 @@ const themeAssets = {
 };
 
 function PixelButton({ children, href, onClick, secondary = false, ...props }) {
-  const className = `pixel-button ${secondary ? "pixel-button-secondary" : ""}`;
+  const className = `${ui.pixelButton} ${secondary ? "" : ""}`;
   return href ? <a className={className} href={href} {...props}>{children}</a> : <button className={className} onClick={onClick} {...props}>{children}</button>;
 }
 
@@ -181,94 +182,104 @@ export default function Portfolio() {
   }, [menuIndex, menuItems, selected, view]);
 
   return (
-    <main className="portfolio-shell" data-theme={theme}>
-      <div className="scanlines" aria-hidden="true" />
-      <div className="twinkle-stars" aria-hidden="true">
-        <span /><span /><span /><span /><span />
+    <main className={ui.shell} data-theme={theme}>
+      <div
+        aria-hidden="true"
+        className="scanlines pointer-events-none absolute inset-0 z-[1] opacity-[0.08] [.portfolio-shell[data-theme=jrpg]_&]:opacity-[0.06] [background:repeating-linear-gradient(0deg,transparent_0_3px,rgba(0,0,0,0.2)_4px)] [mask-image:linear-gradient(180deg,#000,transparent_70%)]"
+      />
+      <div
+        aria-hidden="true"
+        className="twinkle-stars pointer-events-none absolute inset-0 z-[1] overflow-hidden jrpg:hidden"
+      >
+        <span className="absolute left-[22%] top-[18%] size-[2px] animate-star-twinkle bg-[#fff4d1] opacity-[0.28] shadow-[0_0_5px_1px_rgba(255,221,164,0.45)] [animation-delay:-1.4s] motion-reduce:animate-none motion-reduce:opacity-[0.72]" />
+        <span className="absolute left-[77%] top-[32%] size-[2px] animate-star-twinkle bg-[#fff4d1] opacity-[0.28] shadow-[0_0_5px_1px_rgba(255,221,164,0.45)] [animation-delay:-2.6s] motion-reduce:animate-none motion-reduce:opacity-[0.72]" />
+        <span className="absolute left-[41%] top-[57%] size-[2px] animate-star-twinkle bg-[#fff4d1] opacity-[0.28] shadow-[0_0_5px_1px_rgba(255,221,164,0.45)] [animation-delay:-0.8s] motion-reduce:animate-none motion-reduce:opacity-[0.72]" />
+        <span className="absolute left-[89%] top-[73%] size-[2px] animate-star-twinkle bg-[#fff4d1] opacity-[0.28] shadow-[0_0_5px_1px_rgba(255,221,164,0.45)] [animation-delay:-3.1s] motion-reduce:animate-none motion-reduce:opacity-[0.72]" />
+        <span className="absolute left-[11%] top-[88%] size-[2px] animate-star-twinkle bg-[#fff4d1] opacity-[0.28] shadow-[0_0_5px_1px_rgba(255,221,164,0.45)] [animation-delay:-2s] motion-reduce:animate-none motion-reduce:opacity-[0.72]" />
       </div>
-      <header className="topbar mx-auto flex w-full items-center justify-between">
-        <button className="brand" onClick={() => setView("menu")} aria-label="Lucas Zaranza — main menu"><span className="brand-mark">LZ</span><span>LUCAS ZARANZA<span className="brand-sub">GAME DEVELOPER</span></span></button>
-        {view !== "menu" && <nav className="desktop-nav" aria-label="Portfolio screens">{menuItems.map((item) => <button key={item.screen} className={view === item.screen ? "active" : ""} aria-current={view === item.screen ? "page" : undefined} onClick={() => setView(item.screen)}>{item.label}</button>)}</nav>}
-        <div className="top-controls">
-          <button className="language-toggle" onClick={() => setLang(lang === "pt" ? "en" : "pt")} aria-label="Change language"><span className={lang === "pt" ? "active" : ""}>PT</span><span className="toggle-slash">/</span><span className={lang === "en" ? "active" : ""}>EN</span></button>
-          <div className="music-controls"><button className="music-toggle" type="button" onClick={toggleMusic} aria-pressed={musicPlaying} aria-label={musicPlaying ? t.musicOn : t.musicOff}><span aria-hidden="true">♪</span> {musicPlaying ? t.musicOn : t.musicOff}</button><label className="volume-control"><span className="sr-only">{t.musicVolume}</span><input type="range" min="0" max="1" step="0.05" value={musicVolume} onChange={(event) => setMusicVolume(Number(event.target.value))} aria-label={t.musicVolume} /></label></div>
-          <label className="theme-picker"><span>{t.themeLabel}</span><select value={theme} onChange={(event) => setTheme(event.target.value)} aria-label={t.themeLabel}><option value="turbo">{t.turbo}</option><option value="jrpg">{t.jrpg}</option></select></label>
+      <header className={ui.topbar}>
+        <button className={ui.brand} onClick={() => setView("menu")} aria-label="Lucas Zaranza — main menu"><span className={ui.brandMark}>LZ</span><span>LUCAS ZARANZA<span className={ui.brandSub}>GAME DEVELOPER</span></span></button>
+        {view !== "menu" && <nav className={ui.desktopNav} aria-label="Portfolio screens">{menuItems.map((item) => <button key={item.screen} className={`${ui.navItem} ${view === item.screen ? "text-[var(--accent)]" : ""}`} aria-current={view === item.screen ? "page" : undefined} onClick={() => setView(item.screen)}>{item.label}</button>)}</nav>}
+        <div className={ui.topControls}>
+          <button className={ui.languageToggle} onClick={() => setLang(lang === "pt" ? "en" : "pt")} aria-label="Change language"><span className={lang === "pt" ? "text-[var(--accent)]" : ""}>PT</span><span className="px-[5px] text-[var(--line)]">/</span><span className={lang === "en" ? "text-[var(--accent)]" : ""}>EN</span></button>
+          <div className={ui.musicControls}><button className={ui.musicToggle} type="button" onClick={toggleMusic} aria-pressed={musicPlaying} aria-label={musicPlaying ? t.musicOn : t.musicOff}><span aria-hidden="true">♪</span> {musicPlaying ? t.musicOn : t.musicOff}</button><label className={ui.volumeControl}><span className="sr-only">{t.musicVolume}</span><input type="range" min="0" max="1" step="0.05" value={musicVolume} onChange={(event) => setMusicVolume(Number(event.target.value))} aria-label={t.musicVolume} /></label></div>
+          <label className={ui.themePicker}><span>{t.themeLabel}</span><select className={ui.themeSelect} value={theme} onChange={(event) => setTheme(event.target.value)} aria-label={t.themeLabel}><option value="turbo">{t.turbo}</option><option value="jrpg">{t.jrpg}</option></select></label>
         </div>
       </header>
 
       <audio ref={audioRef} loop preload="none" />
 
-      {view === "menu" && <section id="home" className="hero-section title-screen section-wrap">
-        <div className="hero-copy">
-          <div className="online-pill"><span className="status-dot" />{t.status}</div>
-          <p className="eyebrow">{t.eyebrow}</p>
-          <h1>{t.headline}</h1>
-          <div className="hero-stats"><div><strong>{t.xp}</strong><span>{t.xpLabel}</span></div><div><strong>{t.shipped}</strong><span>{t.shippedLabel}</span></div><div><strong>BR</strong><span>FORTALEZA · REMOTE</span></div></div>
-          <div className="main-menu panel-pixel">
-            <p className="menu-heading">{t.menuPrompt}</p>
-            <div className="menu-options" role="menu">
-              {menuItems.map((item, index) => <button key={item.screen} role="menuitem" className={menuIndex === index ? "menu-option selected" : "menu-option"} onMouseEnter={() => setMenuIndex(index)} onFocus={() => setMenuIndex(index)} onClick={() => setView(item.screen)}>
-              <span className="menu-arrow" aria-hidden="true">
-                <Image src={assets.menuCursor} className={`${menuIndex === index? 'block' : 'hidden'}`} width={16} height={16} unoptimized alt=""/>
+      {view === "menu" && <section id="home" className={`${ui.titleSection} ${ui.sectionWrap}`}>
+        <div className={ui.heroCopy}>
+          <div className={ui.statusPill}><span className={ui.statusDot} />{t.status}</div>
+          <p className={ui.eyebrow}>{t.eyebrow}</p>
+          <h1 className={ui.heroTitle}>{t.headline}</h1>
+          <div className={ui.heroStats}><div className={ui.stat}><strong className={ui.statValue}>{t.xp}</strong><span className={ui.statLabel}>{t.xpLabel}</span></div><div className={ui.stat}><strong className={ui.statValue}>{t.shipped}</strong><span className={ui.statLabel}>{t.shippedLabel}</span></div><div className={ui.stat}><strong className={ui.statValue}>BR</strong><span className={ui.statLabel}>FORTALEZA · REMOTE</span></div></div>
+          <div className={`${ui.panel} ${ui.mainMenu}`}>
+            <p className={ui.menuHeading}>{t.menuPrompt}</p>
+            <div className={ui.menuOptions} role="menu">
+              {menuItems.map((item, index) => <button key={item.screen} role="menuitem" className={`${ui.menuOption} ${menuIndex === index ? ui.menuSelected : ""}`} onMouseEnter={() => setMenuIndex(index)} onFocus={() => setMenuIndex(index)} onClick={() => setView(item.screen)}>
+              <span className={ui.menuArrow} aria-hidden="true">
+                <Image src={assets.menuCursor} className={`${menuIndex === index? 'block' : 'hidden'} jrpg:size-8 jrpg:[image-rendering:pixelated]`} width={16} height={16} unoptimized alt=""/>
               </span>
               <span>{item.label}</span>
-              <Image src={assets.menuIcon} width={16} height={16} unoptimized alt=""/>
+              <Image src={assets.menuIcon} width={16} height={16} unoptimized alt="" className="size-4 object-contain jrpg:!size-8 jrpg:[image-rendering:pixelated]"/>
               </button>)}
             </div>
-            <p className="menu-hint">{t.menuHint}</p>
+            <p className={ui.menuHint}>{t.menuHint}</p>
           </div>
         </div>
       </section>}
 
-      {view === "about" && <div className="game-screen section-wrap"><button className="return-menu" onClick={() => setView("menu")}>← {t.backToMenu}</button><section id="about" className="about-section">
-        <div className="section-heading"><p className="eyebrow">{t.aboutEyebrow}</p><h2>{t.aboutTitle}</h2></div>
-        <div className="about-card panel-pixel">
-          <div className="portrait-frame"><Image src="/portfolio/me.png" unoptimized alt="Lucas Zaranza" width={960} height={1280} priority className="portrait"/><span className="portrait-tag">LV. 10+</span></div>
-          <div className="about-copy"><p>{t.aboutText}</p><p className="about-long">{about.paragraphs[2]}</p><div className="skill-list">{t.skills.map((skill) => <span key={skill} className="skill-chip">{skill}</span>)}</div><div className="skills-ribbon">{careerSkills.map((skill) => <span key={skill}>{skill}</span>)}</div></div>
+      {view === "about" && <div className={`${ui.gameScreen} ${ui.sectionWrap}`}><button className={ui.returnMenu} onClick={() => setView("menu")}>← {t.backToMenu}</button><section id="about" className={ui.section}>
+        <div className={ui.sectionHeading}><p className={ui.eyebrow}>{t.aboutEyebrow}</p><h2 className={ui.sectionTitle}>{t.aboutTitle}</h2></div>
+        <div className={`${ui.panel} ${ui.aboutCard}`}>
+          <div className={ui.portraitFrame}><Image src="/portfolio/me.png" unoptimized alt="Lucas Zaranza" width={960} height={1280} priority className={ui.portrait}/><span className={ui.portraitTag}>LV. 10+</span></div>
+          <div className={ui.aboutCopy}><p className={ui.paragraph}>{t.aboutText}</p><p className={ui.paragraph}>{about.paragraphs[2]}</p><div className={ui.skills}>{t.skills.map((skill) => <span key={skill} className={ui.skillChip}>{skill}</span>)}</div><div className={ui.skillsRibbon}>{careerSkills.map((skill) => <span key={skill} className="before:mr-1 before:text-[var(--hot)] before:content-['▸']">{skill}</span>)}</div></div>
         </div>
       </section></div>}
 
-      {view === "projects" && <div className="game-screen section-wrap"><button className="return-menu" onClick={() => setView("menu")}>← {t.backToMenu}</button><section id="projects" className="projects-section">
-        <div className="section-heading section-heading-row"><div><p className="eyebrow">{t.projectsEyebrow}</p><h2>{t.projectsTitle}</h2><p className="section-subtitle">{t.projectHint}</p></div><div className="project-filters" role="group" aria-label="Filter projects">{[["all", t.all], ["featured", t.game], ["webgl", t.webgl]].map(([value, label]) => <button key={value} className={filter === value ? "filter-button active" : "filter-button"} onClick={() => setFilter(value)}>{label}</button>)}</div></div>
-        <div className="project-grid grid gap-4 md:grid-cols-2 lg:grid-cols-3">{shownProjects.map((project) => {
+      {view === "projects" && <div className={`${ui.gameScreen} ${ui.sectionWrap}`}><button className={ui.returnMenu} onClick={() => setView("menu")}>← {t.backToMenu}</button><section id="projects" className={ui.section}>
+        <div className={`${ui.sectionHeading} ${ui.sectionHeadingRow}`}><div><p className={ui.eyebrow}>{t.projectsEyebrow}</p><h2 className={ui.sectionTitle}>{t.projectsTitle}</h2><p className={ui.sectionSubtitle}>{t.projectHint}</p></div><div className={ui.filters} role="group" aria-label="Filter projects">{[["all", t.all], ["featured", t.game], ["webgl", t.webgl]].map(([value, label]) => <button key={value} className={`${ui.filterButton} ${filter === value ? ui.filterActive : ""}`} onClick={() => setFilter(value)}>{label}</button>)}</div></div>
+        <div className={`${ui.projectGrid} md:grid-cols-2 lg:grid-cols-3`}>{shownProjects.map((project) => {
           const originalIndex = projects.findIndex((item) => item.id === project.id);
-          return <button className="project-card" key={project.id} onClick={() => setSelected(project)} aria-label={`${t.more}: ${project.texts.name[lang]}`}>
-            <span className="project-card-top"><span>GAME {String(project.id).padStart(2, "0")}</span><span>{project.year}</span></span>
-            <span className="cartridge-window"><Image unoptimized src={`/portfolio/no-cartridge/${noCartridgeImages[originalIndex]}`} alt="" fill className="cartridge-image"/></span>
-            <span className="project-card-bottom"><span className="project-name">{project.texts.name[lang]}</span><Image src={assets.projectIcon} width={32} height={32} unoptimized alt=""/></span>
+          return <button className={ui.projectCard} key={project.id} onClick={() => setSelected(project)} aria-label={`${t.more}: ${project.texts.name[lang]}`}>
+            <span className={ui.projectTop}><span>GAME {String(project.id).padStart(2, "0")}</span><span>{project.year}</span></span>
+            <span className={ui.cartridgeFrame}><Image unoptimized src={`/portfolio/no-cartridge/${noCartridgeImages[originalIndex]}`} alt="" fill className={ui.cartridgeImage}/></span>
+            <span className={ui.projectBottom}><span className={ui.projectName}>{project.texts.name[lang]}</span><Image src={assets.projectIcon} width={32} height={32} unoptimized alt="" className="size-8 object-contain jrpg:size-11 jrpg:[image-rendering:pixelated]"/></span>
           </button>;
         })}</div>
       </section></div>}
 
-      {view === "experience" && <div className="game-screen section-wrap"><button className="return-menu" onClick={() => setView("menu")}>← {t.backToMenu}</button><section id="experience" className="experience-section">
-        <div className="section-heading"><p className="eyebrow">{t.career}</p><h2>{t.careerTitle}</h2></div>
-        <div className="timeline">{t.experience.map((item) => <article className="timeline-entry" key={item.dates + item.company}><div className="timeline-date">{item.dates}</div><div className="timeline-content panel-pixel"><h3>{item.role}</h3><p className="timeline-company">{item.company}</p><p>{item.detail}</p></div></article>)}</div>
+      {view === "experience" && <div className={`${ui.gameScreen} ${ui.sectionWrap}`}><button className={ui.returnMenu} onClick={() => setView("menu")}>← {t.backToMenu}</button><section id="experience" className={ui.section}>
+        <div className={ui.sectionHeading}><p className={ui.eyebrow}>{t.career}</p><h2 className={ui.sectionTitle}>{t.careerTitle}</h2></div>
+        <div className={ui.timeline}>{t.experience.map((item) => <article className={ui.timelineEntry} key={item.dates + item.company}><div className={ui.timelineDate}>{item.dates}</div><div className={`${ui.panel} ${ui.timelineContent}`}><h3 className={ui.timelineRole}>{item.role}</h3><p className={ui.timelineCompany}>{item.company}</p><p className={ui.timelineDetail}>{item.detail}</p></div></article>)}</div>
       </section></div>}
 
-      {view === "contact" && <div className="game-screen section-wrap"><button className="return-menu" onClick={() => setView("menu")}>← {t.backToMenu}</button><section id="contact" className="contact-section"><div className="contact-panel panel-pixel"><div><p className="eyebrow">{t.contactEyebrow}</p><h2>{t.contactTitle}</h2><p>{t.contactText}</p></div><div className="contact-links"><a href="mailto:lucaszaranza@gmail.com">{t.email}</a><a href="https://www.linkedin.com/in/lucaszaranza" target="_blank" rel="noreferrer">{t.linkedin}</a><a href="https://github.com/lucaspzaranza" target="_blank" rel="noreferrer">{t.github}</a><a href="https://wa.me/5585991753445" target="_blank" rel="noreferrer">{t.whatsapp}</a></div></div></section></div>}
+      {view === "contact" && <div className={`${ui.gameScreen} ${ui.sectionWrap}`}><button className={ui.returnMenu} onClick={() => setView("menu")}>← {t.backToMenu}</button><section id="contact" className={ui.contactSection}><div className={`${ui.panel} ${ui.contactPanel}`}><div><p className="m-0 mb-[14px] text-[8px] text-[var(--accent)]">{t.contactEyebrow}</p><h2 className={ui.contactTitle}>{t.contactTitle}</h2><p className={ui.contactText}>{t.contactText}</p></div><div className={ui.contactLinks}><a className={ui.contactLink} href="mailto:lucaszaranza@gmail.com">{t.email}</a><a className={ui.contactLink} href="https://www.linkedin.com/in/lucaszaranza" target="_blank" rel="noreferrer">{t.linkedin}</a><a className={ui.contactLink} href="https://github.com/lucaspzaranza" target="_blank" rel="noreferrer">{t.github}</a><a className={ui.contactLink} href="https://wa.me/5585991753445" target="_blank" rel="noreferrer">{t.whatsapp}</a></div></div></section></div>}
 
-      <footer className="site-footer"><span>© {new Date().getFullYear()} LUCAS ZARANZA</span><span>{t.footer}</span><button onClick={() => setView("menu")}>{t.nav[0]} ↑</button></footer>
+      <footer className={ui.footer}><span>© {new Date().getFullYear()} LUCAS ZARANZA</span><span className={ui.footerSecond}>{t.footer}</span><button className="border-0 bg-transparent text-[var(--accent)]" onClick={() => setView("menu")}>{t.nav[0]} ↑</button></footer>
 
       {selected && 
-        <div className="modal-backdrop" role="presentation" onMouseDown={(event) => { if (event.target === event.currentTarget) setSelected(null); }}>
-          <section className="project-modal panel-pixel" role="dialog" aria-modal="true" aria-labelledby="modal-title">
-            <button className="modal-close" onClick={() => setSelected(null)} aria-label={t.close}>×</button>
-            <p className="eyebrow">{t.details} · {t.year} {selected.year}</p>
-            <h2 id="modal-title">{selected.texts.name[lang]}</h2>
-            <div className="modal-image"><Image src={`/portfolio/no-cartridge/${noCartridgeImages[projects.findIndex((item) => item.id === selected.id)]}`} alt="" fill sizes="(max-width: 700px) 90vw, 640px" className="cartridge-image"/></div>
-            <div className="modal-description">
-              {selected.texts.description[lang].map((paragraph, index) => <p key={index}>{paragraph}</p>)}
+        <div className={ui.modalBackdrop} role="presentation" onMouseDown={(event) => { if (event.target === event.currentTarget) setSelected(null); }}>
+          <section className={`${ui.panel} ${ui.modal}`} role="dialog" aria-modal="true" aria-labelledby="modal-title">
+            <button className={ui.modalClose} onClick={() => setSelected(null)} aria-label={t.close}>×</button>
+            <p className={ui.modalEyebrow}>{t.details} · {t.year} {selected.year}</p>
+            <h2 className={ui.modalTitle} id="modal-title">{selected.texts.name[lang]}</h2>
+            <div className={ui.modalImage}><Image src={`/portfolio/no-cartridge/${noCartridgeImages[projects.findIndex((item) => item.id === selected.id)]}`} alt="" fill sizes="(max-width: 700px) 90vw, 640px" className={ui.cartridgeImage}/></div>
+            <div className={ui.modalDescription}>
+              {selected.texts.description[lang].map((paragraph, index) => <p key={index} className={ui.modalParagraph}>{paragraph}</p>)}
             </div>
-            <div className="modal-actions">
+            <div className={ui.modalActions}>
               {selected.links.demo && 
                 <PixelButton href={selected.links.demo} target="_blank" rel="noreferrer">
-                  <Image src={assets.demoIcon} width={32} height={32} unoptimized alt=""/>{t.demo}</PixelButton>}
+                  <Image src={assets.demoIcon} width={32} height={32} unoptimized alt="" className="jrpg:size-9 jrpg:[image-rendering:auto]"/>{t.demo}</PixelButton>}
                 {selected.links.youtube && 
                 <PixelButton href={selected.links.youtube} target="_blank" rel="noreferrer">
-                  <Image src="/youtube.png" width={24} height={24} unoptimized alt=""/>{t.video}</PixelButton>}
+                  <Image src="/youtube.png" width={24} height={24} unoptimized alt="" className="jrpg:size-9 jrpg:[image-rendering:auto]"/>{t.video}</PixelButton>}
                 {selected.links.repo && 
                 <PixelButton href={selected.links.repo} target="_blank" rel="noreferrer">
-                  <Image src="/github.png" width={24} height={24} unoptimized alt=""/>{t.repo}</PixelButton>}
+                  <Image src="/github.png" width={24} height={24} unoptimized alt="" className="jrpg:size-9 jrpg:[image-rendering:auto]"/>{t.repo}</PixelButton>}
             </div>
             {/* <button className="close-text" onClick={() => setSelected(null)}>{t.close} X</button> */}
           </section>
