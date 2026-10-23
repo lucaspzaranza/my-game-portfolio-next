@@ -8,14 +8,14 @@ import portfolioData from "../src/data/data.json";
 const { aboutMe, myProjectsData } = portfolioData;
 
 const noCartridgeImages = [
-  "super-bomberman.png", "roleta.png", "flappy-bird.png",
-  "catch-game.png", "slot-machine.png", "jogo-da-memoria.png",
-  "virtual-keyboard.png", "penosas-portfolio.png", "math-factory.png",
-  "doom-of-the-penosas.png", "snake.png", "diep.io.png",
-  "super-bomberman.png", "rg.png", "emo-bears.png",
-  "zaza-kahlo.png", "mesh-game.png", "letra-a.png", "cat-puzzle.png",
-  "fantasy-or-reality.png", "supermarket-game.png", "robo-runner.png",
-  "limpa-copo.png", "love-quiz.png",
+  "bomberman.webp", "roleta.webp", "flappy-bird.webp",
+  "catch-game.webp", "slot-machine.webp", "jogo-da-memoria.webp",
+  "virtual-keyboard.webp", "penosas-strike.webp", "math-factory.webp",
+  "doom-of-the-penosas.webp", "snake.webp", "diep.io.webp",
+  "bomberman.webp", "rg.webp", "emo-bears.webp",
+  "zaza-kahlo.webp", "mesh-game.webp", "letra-a.webp", "cat-puzzle.webp",
+  "fantasy-or-reality.webp", "super-market-game.webp", "robo-runner.webp",
+  "limpa-copo.webp", "love-quiz.webp",
 ];
 
 const copy = {
@@ -245,7 +245,7 @@ export default function Portfolio() {
           const originalIndex = projects.findIndex((item) => item.id === project.id);
           return <button className={ui.projectCard} key={project.id} onClick={() => setSelected(project)} aria-label={`${t.more}: ${project.texts.name[lang]}`}>
             <span className={ui.projectTop}><span>GAME {String(project.id).padStart(2, "0")}</span><span>{project.year}</span></span>
-            <span className={ui.cartridgeFrame}><Image unoptimized src={`/portfolio/no-cartridge/${noCartridgeImages[originalIndex]}`} alt="" fill className={ui.cartridgeImage}/></span>
+            <span className={ui.cartridgeFrame}><Image unoptimized src={`/portfolio/no-cartridge-webp/${noCartridgeImages[originalIndex]}`} alt="" fill className={ui.cartridgeImage}/></span>
             <span className={ui.projectBottom}><span className={ui.projectName}>{project.texts.name[lang]}</span><Image src={assets.projectIcon} width={32} height={32} unoptimized alt="" className="size-8 object-contain jrpg:size-11 jrpg:[image-rendering:pixelated]"/></span>
           </button>;
         })}</div>
@@ -266,7 +266,7 @@ export default function Portfolio() {
             <button className={ui.modalClose} onClick={() => setSelected(null)} aria-label={t.close}>×</button>
             <p className={ui.modalEyebrow}>{t.details} · {t.year} {selected.year}</p>
             <h2 className={ui.modalTitle} id="modal-title">{selected.texts.name[lang]}</h2>
-            <div className={ui.modalImage}><Image src={`/portfolio/no-cartridge/${noCartridgeImages[projects.findIndex((item) => item.id === selected.id)]}`} alt="" fill sizes="(max-width: 700px) 90vw, 640px" className={ui.cartridgeImage}/></div>
+            <div className={ui.modalImage}><Image src={`/portfolio/no-cartridge-webp/${noCartridgeImages[projects.findIndex((item) => item.id === selected.id)]}`} alt="" fill sizes="(max-width: 700px) 90vw, 640px" className={ui.cartridgeImage}/></div>
             <div className={ui.modalDescription}>
               {selected.texts.description[lang].map((paragraph, index) => <p key={index} className={ui.modalParagraph}>{paragraph}</p>)}
             </div>

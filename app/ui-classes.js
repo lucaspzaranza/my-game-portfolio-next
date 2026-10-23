@@ -79,10 +79,10 @@ export const ui = {
   modalEyebrow: "mb-[14px] mr-[42px] text-[8px] text-[var(--accent)]",
   modalTitle: "mb-5 mr-[35px] text-[clamp(12px,2vw,17px)] leading-[1.8] text-[var(--text)]",
   modalClose: "absolute top-3 right-3 z-20 grid size-9 place-items-center border border-[var(--line)] bg-[var(--surface)] text-2xl text-[var(--text)]",
-  modalImage: "modal-image relative mx-auto mb-5 h-[270px] w-[min(100%,520px)] flex-[0_1_auto] min-h-[140px] border-2 border-[var(--line)] bg-transparent max-[640px]:h-[clamp(100px,24vh,190px)] max-[640px]:min-h-[100px]",
+  modalImage: "modal-image relative mx-auto mb-5 aspect-video w-[min(100%,640px)] flex-none border-2 border-[var(--line)] bg-transparent",
   modalDescription: "modal-description min-h-0 flex-[1_1_auto] overflow-y-auto overscroll-contain pr-2 text-[11px] leading-[1.9] text-[var(--muted)] max-[640px]:text-[9px]",
   modalParagraph: "mb-4 last:mb-0",
   modalActions: "modal-actions mt-3 flex flex-[0_0_auto] flex-wrap gap-3 border-t border-[var(--line)] bg-[var(--surface)] pt-3 pb-1 jrpg:border-t-2 jrpg:border-t-[rgba(255,255,255,0.28)] jrpg:bg-transparent",
-  pixelButton: "pixel-button inline-flex min-h-[46px] cursor-pointer items-center justify-center gap-2 border-2 border-[#ffe86b] bg-[#ffe86b] px-[17px] text-[9px] text-[#170b03] no-underline max-[640px]:min-h-[42px] max-[640px]:px-[11px] max-[640px]:text-[8px] jrpg:[text-shadow:none] jrpg:[&>img]:size-9 jrpg:[&>img]:[image-rendering:auto] turbo:text-[#170b03]",
+  pixelButton: "pixel-button inline-flex min-h-[46px] cursor-pointer items-center justify-center gap-2 border-2 border-[#4ac8e8] bg-[#4ac8e8] px-[17px] text-[9px] text-[#07111f] no-underline max-[640px]:min-h-[42px] max-[640px]:px-[11px] max-[640px]:text-[8px] jrpg:[text-shadow:none] jrpg:[&>img]:size-9 jrpg:[&>img]:[image-rendering:auto] turbo:text-[#07111f]",
   closeText: "mx-auto mt-2 inline-flex min-h-[42px] flex-[0_0_auto] items-center justify-center border-2 border-[#ffe86b] bg-[#ffe86b] px-[18px] text-[8px] text-[#170b03] hover:bg-[#fff3a3] focus-visible:outline-2 focus-visible:outline-white focus-visible:outline-offset-2",
 };
